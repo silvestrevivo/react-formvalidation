@@ -22,7 +22,8 @@ body{
 }
 
 .form_element{
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  position: relative;
   label{
     display: block;
     text-align: left;
@@ -36,6 +37,12 @@ body{
     border-radius: 5px;
     padding: 8px 10px;
     box-sizing: border-box;
+  }
+  .label-error{
+    position: absolute;
+    color: #af2b2b;
+    font-size: 12px;
+    margin-top: 5px;
   }
 }
 

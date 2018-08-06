@@ -15,6 +15,13 @@ class App extends Component {
           text: 'text',
           placeholder: 'Enter your name',
         },
+        validation: {
+          required: true,
+          minLen: 5,
+        },
+        valid: false,
+        touched: false,
+        validationMessage: '',
       },
       lastName: {
         element: 'input',
@@ -26,6 +33,12 @@ class App extends Component {
           text: 'text',
           placeholder: 'Enter your last name',
         },
+        validation: {
+          required: false,
+        },
+        valid: true,
+        touched: false,
+        validationMessage: '',
       },
       message: {
         element: 'textarea',
@@ -53,6 +66,7 @@ class App extends Component {
 
   updateForm = newState => {
     this.setState({ formData: newState })
+    // this function update the value of each input
   }
 
   submitForm = e => {
@@ -62,6 +76,7 @@ class App extends Component {
     for (let key in formData) {
       dataToSubmit[key] = formData[key].value
     }
+    // just the function to submit data
     console.log('dataToSubmit', dataToSubmit)
   }
 

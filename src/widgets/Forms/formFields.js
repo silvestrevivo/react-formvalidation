@@ -25,7 +25,34 @@ const FormFields = ({ formData, change }) => {
   const changeHandler = (event, id) => {
     const newState = formData
     newState[id].value = event.target.value
+
+    let validData = validate(newState[id])
+    newState[id].valid = validData[0]
+    newState[id].validationMessage = validData[1]
+
     change(newState)
+  }
+
+  const validate = element => {
+    console.log(element)
+    let error = [true, '']
+    // here is where we writte the rules for validation
+
+    if (element.validation.minLen) {
+      const valid = element.value.length >= element.validation.minLen
+      const message = `${!valid ? 'Must be greater than ' + element.validation.minLen : ''}`
+
+      error = !valid ? [valid, message] : error
+    }
+
+    if (element.validation.required) {
+      const valid = element.value.trim() !== ''
+      const message = `${!valid ? 'This field is required' : ''}`
+
+      error = !valid ? [valid, message] : error
+    }
+
+    return error
   }
 
   const renderTemplates = data => {
@@ -37,6 +64,7 @@ const FormFields = ({ formData, change }) => {
           <Aux>
             {values.label ? <label>{values.labelText}</label> : null}
             <input {...values.config} value={values.value} onChange={event => changeHandler(event, data.id)} />
+            {values.validation && !values.valid ? <div className="label-error">{values.validationMessage}</div> : null}
           </Aux>
         )
         break
