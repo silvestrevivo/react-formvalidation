@@ -36,7 +36,12 @@ class App extends Component {
 
   submitForm = e => {
     e.preventDefault()
-    console.log(this.state.formData)
+    let dataToSubmit = {}
+    const { formData } = this.state
+    for (let key in formData) {
+      dataToSubmit[key] = formData[key].value
+    }
+    console.log('dataToSubmit', dataToSubmit)
   }
 
   render() {
