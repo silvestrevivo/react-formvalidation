@@ -1,0 +1,43 @@
+{
+  "plugins": [
+    [
+      "transform-class-properties",
+      {
+        "spec": true
+      }
+    ],
+    [
+      "transform-object-rest-spread"
+    ],
+    [
+      "transform-runtime"
+    ],
+    [
+      "react-hot-loader/babel"
+    ]
+  ],
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
+    "react",
+    "stage-0"
+  ],
+  "env": {
+    "start": {
+      "presets": [
+        "react-hmre"
+      ]
+    },
+    "test": {
+      "presets": [
+        "env",
+        "react",
+        "stage-0"
+      ]
+    }
+  }
+}
