@@ -30,8 +30,13 @@ class App extends Component {
     },
   }
 
-  submitForm = () => {
-    //....
+  updateForm = newState => {
+    this.setState({ formData: newState })
+  }
+
+  submitForm = e => {
+    e.preventDefault()
+    console.log(this.state.formData)
   }
 
   render() {
@@ -40,7 +45,7 @@ class App extends Component {
       <div className="container">
         <h1>Form validation pattern</h1>
         <form onSubmit={this.submitForm}>
-          <FormFields formData={formData} />
+          <FormFields formData={formData} change={newState => this.updateForm(newState)} />
           <button type="submit">Submit</button>
         </form>
       </div>
