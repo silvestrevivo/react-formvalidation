@@ -40,6 +40,28 @@ const FormFields = ({ formData, change }) => {
           </Aux>
         )
         break
+      case 'textarea':
+        formTemplate = (
+          <Aux>
+            {values.label ? <label>{values.labelText}</label> : null}
+            <textarea {...values.config} value={values.value} onChange={event => changeHandler(event, data.id)} />
+          </Aux>
+        )
+        break
+      case 'select':
+        formTemplate = (
+          <Aux>
+            {values.label ? <label>{values.labelText}</label> : null}
+            <select name={values.config.name} value={values.value} onChange={event => changeHandler(event, data.id)}>
+              {values.config.option.map((item, i) => (
+                <option key={i} value={item.val}>
+                  {item.text}
+                </option>
+              ))}
+            </select>
+          </Aux>
+        )
+        break
       default:
         formTemplate = null
     }

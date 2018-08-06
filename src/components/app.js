@@ -27,6 +27,27 @@ class App extends Component {
           placeholder: 'Enter your last name',
         },
       },
+      message: {
+        element: 'textarea',
+        value: '',
+        label: true,
+        labelText: 'Message',
+        config: {
+          name: 'message_input',
+          rows: 4,
+          cols: 36,
+        },
+      },
+      age: {
+        element: 'select',
+        value: '',
+        label: true,
+        labelText: 'Age',
+        config: {
+          name: 'message_input',
+          option: [{ val: 1, text: '10-20' }, { val: 2, text: '21-30' }, { val: 3, text: '+30' }],
+        },
+      },
     },
   }
 
