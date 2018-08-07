@@ -34,9 +34,9 @@ class App extends Component {
           placeholder: 'Enter your last name',
         },
         validation: {
-          required: false,
+          required: true,
         },
-        valid: true,
+        valid: false,
         touched: false,
         validationMessage: '',
       },
@@ -50,6 +50,10 @@ class App extends Component {
           rows: 4,
           cols: 36,
         },
+        validation: {
+          required: false,
+        },
+        valid: true,
       },
       age: {
         element: 'select',
@@ -60,6 +64,10 @@ class App extends Component {
           name: 'message_input',
           option: [{ val: 1, text: '10-20' }, { val: 2, text: '21-30' }, { val: 3, text: '+30' }],
         },
+        validation: {
+          required: false,
+        },
+        valid: true,
       },
     },
   }
@@ -72,12 +80,21 @@ class App extends Component {
   submitForm = e => {
     e.preventDefault()
     let dataToSubmit = {}
+    let formIsValid = true
     const { formData } = this.state
+
     for (let key in formData) {
       dataToSubmit[key] = formData[key].value
     }
-    // just the function to submit data
-    console.log('dataToSubmit', dataToSubmit)
+
+    for (let key in formData) {
+      formIsValid = formData[key].valid && formIsValid
+    }
+
+    if (formIsValid) {
+      // just the function to submit data
+      console.log('dataToSubmit', dataToSubmit)
+    }
   }
 
   render() {
@@ -86,7 +103,11 @@ class App extends Component {
       <div className="container">
         <h1>Form validation pattern</h1>
         <form onSubmit={this.submitForm}>
-          <FormFields formData={formData} change={newState => this.updateForm(newState)} />
+          <FormFields
+            formData={formData}
+            change={newState => this.updateForm(newState)}
+            //onblur={newState => this.updateForm(newState)}
+          />
           <button type="submit">Submit</button>
         </form>
       </div>

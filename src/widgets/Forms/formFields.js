@@ -22,22 +22,27 @@ const FormFields = ({ formData, change }) => {
     })
   }
 
-  const changeHandler = (event, id) => {
+  const changeHandler = (event, id, blur) => {
     const newState = formData
     newState[id].value = event.target.value
 
-    let validData = validate(newState[id])
-    newState[id].valid = validData[0]
-    newState[id].validationMessage = validData[1]
+    if (blur) {
+      let validData = validate(newState[id])
+      newState[id].valid = validData[0]
+      newState[id].validationMessage = validData[1]
+    }
+
+    newState[id].touched = blur
 
     change(newState)
   }
 
   const validate = element => {
-    console.log(element)
     let error = [true, '']
     // here is where we writte the rules for validation
+    // the order of the checkings has to be consequent
 
+    // Validation minLength > 5
     if (element.validation.minLen) {
       const valid = element.value.length >= element.validation.minLen
       const message = `${!valid ? 'Must be greater than ' + element.validation.minLen : ''}`
@@ -45,6 +50,7 @@ const FormFields = ({ formData, change }) => {
       error = !valid ? [valid, message] : error
     }
 
+    // Validation required
     if (element.validation.required) {
       const valid = element.value.trim() !== ''
       const message = `${!valid ? 'This field is required' : ''}`
@@ -63,7 +69,12 @@ const FormFields = ({ formData, change }) => {
         formTemplate = (
           <Aux>
             {values.label ? <label>{values.labelText}</label> : null}
-            <input {...values.config} value={values.value} onChange={event => changeHandler(event, data.id)} />
+            <input
+              {...values.config}
+              value={values.value}
+              onBlur={event => changeHandler(event, data.id, true)}
+              onChange={event => changeHandler(event, data.id, false)}
+            />
             {values.validation && !values.valid ? <div className="label-error">{values.validationMessage}</div> : null}
           </Aux>
         )
